@@ -39,6 +39,21 @@ void AAuraCharacterBase::InitializePrimaryAttributes() const
 	GetAbilitySystemComponent()->ApplyGameplayEffectSpecToTarget(*GameplayEffectSpecHandle.Data.Get(), GetAbilitySystemComponent());
 }
 
+void AAuraCharacterBase::InitializeSecondaryAttributes() const
+{
+	check(IsValid(GetAbilitySystemComponent()));
+	check(DefaultSecondaryAttributes);
+	const FGameplayEffectContextHandle GameplayEffectContextHandle = GetAbilitySystemComponent()->MakeEffectContext();
+	const FGameplayEffectSpecHandle GameplayEffectSpecHandle = GetAbilitySystemComponent()->MakeOutgoingSpec(DefaultSecondaryAttributes, 1.f, GameplayEffectContextHandle);
+	GetAbilitySystemComponent()->ApplyGameplayEffectSpecToTarget(*GameplayEffectSpecHandle.Data.Get(), GetAbilitySystemComponent());
+}
+
+void AAuraCharacterBase::InitializeDefaultAttributes() const
+{
+	InitializePrimaryAttributes();
+	InitializeSecondaryAttributes();
+}
+
 
 
 
