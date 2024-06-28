@@ -34,7 +34,8 @@ void AAuraCharacterBase::InitializePrimaryAttributes() const
 {
 	check(IsValid(GetAbilitySystemComponent()));
 	check(DefaultPrimaryAttributes);
-	const FGameplayEffectContextHandle GameplayEffectContextHandle = GetAbilitySystemComponent()->MakeEffectContext();
+	FGameplayEffectContextHandle GameplayEffectContextHandle = GetAbilitySystemComponent()->MakeEffectContext();
+	GameplayEffectContextHandle.AddSourceObject(this);
 	const FGameplayEffectSpecHandle GameplayEffectSpecHandle = GetAbilitySystemComponent()->MakeOutgoingSpec(DefaultPrimaryAttributes, 1.f, GameplayEffectContextHandle);
 	GetAbilitySystemComponent()->ApplyGameplayEffectSpecToTarget(*GameplayEffectSpecHandle.Data.Get(), GetAbilitySystemComponent());
 }
@@ -43,7 +44,8 @@ void AAuraCharacterBase::InitializeSecondaryAttributes() const
 {
 	check(IsValid(GetAbilitySystemComponent()));
 	check(DefaultSecondaryAttributes);
-	const FGameplayEffectContextHandle GameplayEffectContextHandle = GetAbilitySystemComponent()->MakeEffectContext();
+	FGameplayEffectContextHandle GameplayEffectContextHandle = GetAbilitySystemComponent()->MakeEffectContext();
+	GameplayEffectContextHandle.AddSourceObject(this);
 	const FGameplayEffectSpecHandle GameplayEffectSpecHandle = GetAbilitySystemComponent()->MakeOutgoingSpec(DefaultSecondaryAttributes, 1.f, GameplayEffectContextHandle);
 	GetAbilitySystemComponent()->ApplyGameplayEffectSpecToTarget(*GameplayEffectSpecHandle.Data.Get(), GetAbilitySystemComponent());
 }
